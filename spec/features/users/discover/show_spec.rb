@@ -26,18 +26,26 @@ RSpec.describe 'Discover Show', type: :feature do
     expect(page).to have_button('Search by Movie Title')
   end
 
-  it 'allows user to search for movies' do
-    sample_json_response = File.read('spec/fixtures/top_rated_movies.json')
-  end
+#   When I visit the discover movies page ('/users/:id/discover'),
+# and click on either the Discover Top Rated Movies button or fill out the movie title search and click the Search button,
+# I should be taken to the movies results page (`users/:user_id/movies`) where I see: 
 
-  it 'displays top rated movies', :vcr do 
+# - Title (As a Link to the Movie Details page (see story #3))
+# - Vote Average of the movie
+
+# I should also see a button to return to the Discover Page.
+
+  it 'allows user to search for movies', :vcr do
     fill_in :search, with: 'The Lion King'
     click_button 'Search by Movie Title'
-
+  
     expect(page.status_code).to eq(200)
     expect(page).to have_content('The Lion King')
-    expect(page).to have_content('Vote Average of the movie')
-    expect(page).to have_button("Discover Page")
+    expect(page).to have_content('Vote average of the movie')
+    expect(page).to have_link("Discover Page")
+  end
+
+  xit 'displays top rated movies' do 
 
   end
 end

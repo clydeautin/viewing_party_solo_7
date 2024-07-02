@@ -2,7 +2,7 @@
   <h1>Discover Movies</h1>
 
   <div class="search-section">
-    <%= form_tag("/movies", method: "get") do %>
+    <%= form_with url: "/users/#{@user.id}/movies", method: :get, class: "form-inline" do |form| %>
       <div class="form-group">
         <%= text_field_tag(:search_keywords, nil, placeholder: "search") %>
         <%= submit_tag("Search by Movie Title") %>
