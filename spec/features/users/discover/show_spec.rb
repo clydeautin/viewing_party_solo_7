@@ -25,4 +25,19 @@ RSpec.describe 'Discover Show', type: :feature do
   it 'I see a Button to Search by Movie Title' do
     expect(page).to have_button('Search by Movie Title')
   end
+
+  it 'allows user to search for movies' do
+    sample_json_response = File.read('spec/fixtures/top_rated_movies.json')
+  end
+
+  it 'displays top rated movies', :vcr do 
+    fill_in :search, with: 'The Lion King'
+    click_button 'Search by Movie Title'
+
+    expect(page.status_code).to eq(200)
+    expect(page).to have_content('The Lion King')
+    expect(page).to have_content('Vote Average of the movie')
+    expect(page).to have_button("Discover Page")
+
+  end
 end
