@@ -1,5 +1,7 @@
 class Review
 
+  attr_reader :review_count, :review_author_info
+
   def initialize(data)
     @review_count = data[:total_results]
     @review_author_info = create_review_hash(data[:results])

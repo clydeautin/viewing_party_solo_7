@@ -1,7 +1,10 @@
 class Credit
 
+  attr_reader :actors
+
   def initialize(data)
     @actors = create_actor_array(data[:cast])
+  
   end
 
   def create_actor_array(data)
@@ -11,5 +14,6 @@ class Credit
         actors << cast_details[:name]
       end
     end
+    actors
   end
 end

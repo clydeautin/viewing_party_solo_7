@@ -17,7 +17,7 @@ class MoviesController < ApplicationController
 
   def show
     #hit the api to get the movie details
-    # require 'pry'; binding.pry
+    @user = User.find(params[:user_id])
     movie_id = params[:id]
     conn = Faraday.new(url: 'https://api.themoviedb.org') do |faraday|
       faraday.headers["X-Api-Key"] = Rails.application.credentials.movie_db[:key]
@@ -36,7 +36,6 @@ class MoviesController < ApplicationController
 
     credit_data = JSON.parse(credit_response.body, symbolize_names: true)
     @credits = Credit.new(credit_data)
-    # require 'pry'; binding.pry
 
     review_response = conn.get("/3/movie/#{movie_id}/reviews?language=en-US") do |req|
       req.params['api_key'] = Rails.application.credentials.movie_db[:key]
@@ -44,5 +43,6 @@ class MoviesController < ApplicationController
 
     review_response = JSON.parse(review_response.body, symbolize_names: true)
     @reviews = Review.new(review_response)
+
   end
 end
