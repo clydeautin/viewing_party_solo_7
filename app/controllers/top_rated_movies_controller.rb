@@ -10,5 +10,6 @@ class TopRatedMoviesController < ApplicationController
     end
 
     @movies = JSON.parse(response.body, symbolize_names: true)[:results]
+    @user = User.find(params[:user_id])
   end
 end
