@@ -1,11 +1,11 @@
 <h1>Top Rated Movies</h1>
 
-<p><%= button_to "Discover Page", user_discover_index_path(@user) %></p>
+<p><%= link_to "Discover Page", "/users/#{@user.id}/discover", class: "btn btn-primary" %></p>
 
 <ul>
   <% @movies.each do |movie| %>
     <li class="movie">
-      <h2><div class="title"><%= link_to movie[:original_title], "/users/#{@user.id}/#{movie[:original_title]}" %></div></h2>
+      <h2><div class="title"><%= link_to movie[:original_title], "/users/#{@user.id}/movies/#{movie[:id]}" %></div></h2>
       <p>Vote Average: <%= movie[:vote_average] %></p>
     </li>
     <hr>

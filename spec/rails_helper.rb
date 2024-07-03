@@ -78,5 +78,8 @@ Shoulda::Matchers.configure do |config|
     config.configure_rspec_metadata!
 
     config.allow_http_connections_when_no_cassette = true
+    config.before_record do |i|
+      i.response.body.force_encoding('UTF-8')
+    end
   end
 end
