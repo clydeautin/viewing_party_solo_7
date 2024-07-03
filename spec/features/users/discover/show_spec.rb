@@ -42,10 +42,16 @@ RSpec.describe 'Discover Show', type: :feature do
     expect(page.status_code).to eq(200)
     expect(page).to have_content('The Lion King')
     expect(page).to have_content('Vote average of the movie')
-    expect(page).to have_link("Discover Page")
+    expect(page).to have_button("Discover Page")
   end
 
-  xit 'displays top rated movies' do 
+  it 'displays top rated movies' do 
+    click_button 'Discover Top Rated Movies'
 
+    expect(page.status_code).to eq(200)
+    expect(page).to have_css('.movie', count: 20) # Assuming there will be 10 movies displayed on the page
+    expect(page).to have_link('Title', count: 20) # Assuming each movie will have a link to the movie details page
+    expect(page).to have_content('Vote Average', count: 20) # Assuming each movie will have a vote average displayed
+    expect(page).to have_button('Discover Page')
   end
 end

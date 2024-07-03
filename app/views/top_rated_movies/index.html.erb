@@ -1,0 +1,14 @@
+<h1>Top Rated Movies</h1>
+
+<ul>
+  <% @movies.each do |movie| %>
+    <li class="movie">
+      <h2><%= link_to movie.title, movie_path(movie) %></h2>
+      <p>Rating: <%= movie.rating %></p>
+      <p>Description: <%= movie.description %></p>
+      <p>Vote Average: <%= movie.vote_average %></p>
+    </li>
+  <% end %>
+</ul>
+
+<%= button_to 'Discover Page', discover_path %>

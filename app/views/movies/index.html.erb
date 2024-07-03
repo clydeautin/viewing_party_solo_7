@@ -1,5 +1,5 @@
 <h1>Search Results</h1>
-<p> Return to <a href="/users/#{@user_1.id}">Discover Page</a></p>
+<p><%= button_to 'Discover Page', "/users/#{@user.id}/discover", method: :get %></p>
 <ul>
   <% @movies.each do |movie| %>
 
