@@ -1,6 +1,6 @@
 class Movie
 
-  attr_reader :title, :vote_average, :runtime, :genres, :summary, :runtime_h_m
+  attr_reader :title, :vote_average, :runtime, :genres, :summary, :runtime_h_m, :id
 
   def initialize(data)
     @title = data[:title]
@@ -9,7 +9,7 @@ class Movie
     @runtime_h_m = runtime_in_hours_and_minutes
     @genres = create_genre_array(data[:genres])
     @summary = data[:overview]
-
+    @id = data[:id]
   end
 
   def create_genre_array(genres_list)
@@ -22,5 +22,9 @@ class Movie
     hours = @runtime / 60
     minutes = @runtime % 60
     "#{hours}h #{minutes} mins"
+  end
+
+  def find_by_id(id)
+    
   end
 end

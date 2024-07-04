@@ -34,7 +34,7 @@ RSpec.describe 'Movie Show', type: :feature do
       visit user_movie_path(@user_1, 9732)
       # save_and_open_page
       expect(page.status_code).to eq(200)
-      expect(page).to have_button("Create a Viewing Party")
+      expect(page).to have_link("Create a Viewing Party")
       expect(page).to have_content('The Lion King II: Simba\'s Pride')
       expect(page).to have_content('Runtime: 1h 21 mins')
       expect(page).to have_content('Vote Average: 6.9')
@@ -62,7 +62,7 @@ RSpec.describe 'Movie Show', type: :feature do
   it 'can create a new viewing party - Happy Path', :vcr do
     VCR.use_cassette('spec/fixtures/vcr_cassettes/Movie_Show/shows_the_movie_details.yml') do
       visit user_movie_path(@user_1, 9732)
-      click_button 'Create a Viewing Party'
+      click_link 'Create a Viewing Party'
 
       expect(page).to have_content('Party Duration: 1h 21m')
 
@@ -75,7 +75,7 @@ RSpec.describe 'Movie Show', type: :feature do
       expect(page).to have_css('.guests')
       expect(page).to have_button('Create Party')
       
-      click_button 'Create Party'
+      click_button 'Create Viewing Party'
 
       expect(current_path).to eq("/users/#{@user_1}")
       expect(page).to have_content('Party Duration: 1h 21m')
