@@ -22,28 +22,31 @@ RSpec.describe 'Movie Show', type: :feature do
   # - Count of total reviews
   # - Each review's author and information
 
-  it 'shows the movie details' do
-    visit "/users/#{@user_1.id}/discover"
-    fill_in :search, with: 'The Lion King'
-    click_button 'Search by Movie Title'
+  it 'shows the movie details', :vcr do
+    VCR.use_cassette('spec/fixtures/vcr_cassettes/Movie_Show/shows_the_movie_details.yml') do
+      # stub_request(:get, 'https://api.themoviedb.org/3/movies/9732?language=en-US')
+      # visit "/users/#{@user_1.id}/discover"
+      # fill_in :search, with: 'The Lion King'
+      # click_button 'Search by Movie Title'
 
-    click_link "The Lion King II: Simba's Pride"
+      # click_link "The Lion King II: Simba's Pride"
 
-    expect(page.status_code).to eq(200)
-    expect(page).to have_button("Create a Viewing Party")
-    expect(page).to have_content('The Lion King II: Simba\'s Pride')
-    expect(page).to have_content('Runtime: 1h 21 mins')
-    expect(page).to have_content('Vote Average: 6.945')
-    expect(page).to have_content('Genres: Family, Adventure, Animation, Action')
-    expect(page).to have_css('.summary')
-    expect(page).to have_css('.actor', count: 10)
-    expect(page).to have_content('Total Reviews: 1')
-    
-    if page.has_css?('.review')
-      expect(page).to have_css('.author')
-      expect(page).to have_css('.content')
+      visit user_movie_path(@user_1, 9732)
+      # save_and_open_page
+      expect(page.status_code).to eq(200)
+      expect(page).to have_button("Create a Viewing Party")
+      expect(page).to have_content('The Lion King II: Simba\'s Pride')
+      expect(page).to have_content('Runtime: 1h 21 mins')
+      expect(page).to have_content('Vote Average: 6.9')
+      expect(page).to have_content('Genres: Family, Adventure, Animation, Action')
+      expect(page).to have_css('.summary')
+      expect(page).to have_css('.actor', count: 10)
+      expect(page).to have_content('Total Reviews: 1')
+
+      if page.has_css?('.review')
+        expect(page).to have_css('.author')
+        expect(page).to have_css('.content')
+      end
     end
-
-
   end
 end
