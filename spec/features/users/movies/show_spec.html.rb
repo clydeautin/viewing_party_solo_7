@@ -61,24 +61,20 @@ RSpec.describe 'Movie Show', type: :feature do
 
   it 'can create a new viewing party - Happy Path', :vcr do
     VCR.use_cassette('spec/fixtures/vcr_cassettes/Movie_Show/shows_the_movie_details.yml') do
-      visit user_movie_path(@user_1, 9732)
-      click_link 'Create a Viewing Party'
+      visit "/users/#{@user_1.id}/moviews/9732/viewing_party/new"
+      # save_and_open_page
 
-      expect(page).to have_content('Party Duration: 1h 21m')
+      expect(page).to have_field('Party Duration:', with: '81')
 
-      expect(page).to have_field('When')
-      select '2024-07-07', from: 'When'
-
-      expect(page).to have_field('Start Time')
-      select '12:00', from: 'Start Time'
+      fill_in 'date', with: '2024-07-07'
+      fill_in 'start_time', with: '11:30'
 
       expect(page).to have_css('.guests')
-      expect(page).to have_button('Create Party')
       
       click_button 'Create Viewing Party'
 
       expect(current_path).to eq("/users/#{@user_1}")
-      expect(page).to have_content('Party Duration: 1h 21m')
+      expect(page).to have_content('Party Time: 2024-07-07 at 11:30')
     end
   end
 end

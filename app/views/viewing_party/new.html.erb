@@ -1,22 +1,33 @@
 <%= form_with url: "/users/#{@user.id}/movies/#{@movie.id}/viewing_party", method: :post, data: { turbo: false }, local: true do |form| %>
   <div>
-    <%= form.label :duration %>
-    <%= form.time_field :duration%>
+    <%= form.label :duration, "Party Duration:" %>
+    <%= form.number_field :duration, value: @movie.runtime, min: @movie_runtime %>
   </div>
 
   <div>
-    <%= form.label :date %>
-    <%= form.date_field :date %>
+    <%= form.label :date, 'Date' %>
+    <%= form.date_field :date, id: 'party_date' %>
   </div>
 
   <div>
-    <%= form.label :start_time %>
+    <%= form.label :start_time, 'Start time' %>
     <%= form.time_field :start_time %>
   </div>
 
-  <div>
-    <%= form.label :guests %>
+  <div class="guests">
+    <%= form.label :guest1, 'Guest 1' %>
     <%= form.text_field :guests %>
   </div>
+
+  <div class="guests">
+  <%= form.label :guest2, 'Guest 2' %>
+  <%= form.text_field :guests %>
+  </div>
+
+  <div class="guests">
+  <%= form.label :guests3, 'Guest 3' %>
+  <%= form.text_field :guests %>
+  </div>
+
   <%= form.submit 'Create Viewing Party', class: "btn btn-primary" %>
 <% end %>

@@ -3,9 +3,9 @@
 <ul>
   <% @movies.each do |movie| %>
 
-    <p>Title: <%= link_to movie[:title], "/users/#{@user.id}/movies/#{movie[:id]}" %></p>
-    <p>Vote average of the movie: <%= movie[:vote_average] %></p>
-    <p> Movie overview: <%= movie[:overview] %></p>
+    <p>Title: <%= link_to movie.title, "/users/#{@user.id}/movies/#{movie.id}" %></p>
+    <p>Vote average of the movie: <%= movie.vote_average %></p>
+    <p> Movie overview: <%= movie.summary %></p>
     <hr>
   <% end %>
   <hr>

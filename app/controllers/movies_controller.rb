@@ -1,37 +1,26 @@
 class MoviesController < ApplicationController
   def index
     @user = User.find(params[:user_id])
-    search_terms = params[:search_keywords]
-    @movies = MovieService.get_movies_by_search(search_terms)
+    @movies = MovieFacade.new.get_movies_by_search(params[:search_keywords])
   end
 
   def show
     #hit the api to get the movie details
     @user = User.find(params[:user_id])
-    movie_id = params[:id]
-    conn = Faraday.new(url: 'https://api.themoviedb.org') do |faraday|
-      faraday.headers["X-Api-Key"] = Rails.application.credentials.movie_db[:key]
-    end
 
-    response = conn.get("/3/movie/#{movie_id}?language=en-US") do |req|
-      req.params['api_key'] = Rails.application.credentials.movie_db[:key]
-    end
+    # movie_data = MovieService.get_movie_by_id(movie_id)
+    # @movie = Movie.new(movie_data)
 
-    data = JSON.parse(response.body, symbolize_names: true)
-    @movie = Movie.new(data)
+    @movie = MovieFacade.new.get_movie_by_id(params[:id])
 
-    credit_response = conn.get("/3/movie/#{movie_id}/credits?language=en-US") do |req|
-      req.params['api_key'] = Rails.application.credentials.movie_db[:key]
-    end
 
-    credit_data = JSON.parse(credit_response.body, symbolize_names: true)
-    @credits = Credit.new(credit_data)
+    # credit_data = MovieService.get_credits_by_movie_id(params[:id])
+    # @credits = Credit.new(credit_data)
+    @credits = MovieFacade.new.get_credits_by_movie_id(params[:id])
 
-    review_response = conn.get("/3/movie/#{movie_id}/reviews?language=en-US") do |req|
-      req.params['api_key'] = Rails.application.credentials.movie_db[:key]
-    end
+    # review_data = MovieService.get_reviews_by_moviezs_id(params[:id])
+    # @reviews = Review.new(review_data)
+    @reviews = MovieFacade.new.get_reviews_by_movie_id(params[:id])
 
-    review_response = JSON.parse(review_response.body, symbolize_names: true)
-    @reviews = Review.new(review_response)
   end
 end

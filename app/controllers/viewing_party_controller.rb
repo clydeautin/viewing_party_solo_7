@@ -1,19 +1,31 @@
 class ViewingPartyController < ApplicationController
   def new
-    @movie = Movie.find(params[:movie_id]) #test is breaking here ' undefined method `find' for Movie:Class'
+    movie_data = MovieService.get_movie_by_id(params[:movie_id])
+    @movie = Movie.new(movie_data)
     @user = User.find(params[:user_id])
   end
-
+  
   def create
-    party = current_user.parties.create(party_params)
-    party.save
-    party.invite_guests(params[:friends])
-    redirect_to dashboard_path
+    movie_data = MovieService.get_movie_by_id(params[:movie_id])
+    @user = User.find(params[:user_id])
+    @movie = Movie.new(movie_data)
+    @viewing_party = ViewingParty.new(duration: params[:duration], 
+                                      date: params[:date], 
+                                      start_time: params[:start_time],
+                                      movie_runtime: @movie.runtime)
+    if @viewing_party.save
+      UserParty.create(user: @user, viewing_party: @viewing_party, host: true)
+      redirect_to user_path(@user), notice: 'Viewing party successfully created.'
+    else
+      flash.now[:alert] = 'Failed to create party. Please try again.'
+      render :new
+    end
   end
 
   private
 
-  def party_params
-    params.permit(:movie_id, :duration, :date, :start_time)
+  def viewing_party_params
+    params.require(:viewing_party).permit(:duration, :date, :start_time)
   end
+
 end
