@@ -14,6 +14,15 @@
     <%= form.time_field :start_time %>
   </div>
 
+  <h3>Guests (Optional)</h3>
+
+  <% 3.times do |i| %>
+    <div class="guests">
+      <%= form.label "guest#{i + 1}", "Guest #{i + 1} Email" %>
+      <%= form.email_field "guest#{i + 1}", class: 'guests', placeholder: 'Enter guest email (optional)' %>
+    </div>
+  <% end %>
+
   <div class="guests">
     <%= form.label :guest1, 'Guest 1' %>
     <%= form.text_field :guests %>

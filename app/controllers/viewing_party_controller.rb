@@ -15,6 +15,11 @@ class ViewingPartyController < ApplicationController
                                       movie_runtime: @movie.runtime)
     if @viewing_party.save
       UserParty.create(user: @user, viewing_party: @viewing_party, host: true)
+      # require 'pry'; binding.pry
+      [params[:guest1], params[:guest2], params[:guest3]].compact_blank.each do |email|
+        user_guest = User.find_by(email: email)
+        UserParty.create(user: user_guest, viewing_party: @viewing_party, host: false)
+      end
       redirect_to user_path(@user), notice: 'Viewing party successfully created.'
     else
       flash.now[:alert] = 'Failed to create party. Please try again.'

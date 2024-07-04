@@ -53,28 +53,26 @@ RSpec.describe 'Movie Show', type: :feature do
   #   When I visit the new viewing party page ('/users/:user_id/movies/:movie_id/viewing_party/new', where :user_id is a valid user's id and :movie_id is a valid Movie id from the API),
   # I should see the name of the movie title rendered above a form with the following fields:
 
-  # [] Duration of Party with a default value of movie runtime in minutes; a viewing party should NOT be created if set to a value less than the duration of the movie
-  # [] When: field to select date
-  # [] Start Time: field to select time
-  # [] Guests: three (optional) text fields for guest email addresses 
-  # [] Button to create a party
+  # [x] Duration of Party with a default value of movie runtime in minutes; a viewing party should NOT be created if set to a value less than the duration of the movie
+  # [x] When: field to select date
+  # [x] Start Time: field to select time
+  # [x] Guests: three (optional) text fields for guest email addresses 
+  # [x] Button to create a party
 
-  it 'can create a new viewing party - Happy Path', :vcr do
-    VCR.use_cassette('spec/fixtures/vcr_cassettes/Movie_Show/shows_the_movie_details.yml') do
-      visit "/users/#{@user_1.id}/moviews/9732/viewing_party/new"
-      # save_and_open_page
+  it 'can create a new viewing party - Happy Path' do
+    visit "/users/#{@user_1.id}/moviews/9732/viewing_party/new"
+    # save_and_open_page
 
-      expect(page).to have_field('Party Duration:', with: '81')
+    expect(page).to have_field('Party Duration:', with: '81')
 
-      fill_in 'date', with: '2024-07-07'
-      fill_in 'start_time', with: '11:30'
+    fill_in 'date', with: '2024-07-07'
+    fill_in 'start_time', with: '11:30'
 
-      expect(page).to have_css('.guests')
-      
-      click_button 'Create Viewing Party'
+    expect(page).to have_css('.guests')
+    
+    click_button 'Create Viewing Party'
 
-      expect(current_path).to eq("/users/#{@user_1}")
-      expect(page).to have_content('Party Time: 2024-07-07 at 11:30')
-    end
+    expect(current_path).to eq("/users/#{@user_1.id}")
+    expect(page).to have_content('Party Time: 2024-07-07 at 11:30')
   end
 end
