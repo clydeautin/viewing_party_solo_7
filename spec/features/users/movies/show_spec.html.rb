@@ -8,19 +8,19 @@ RSpec.describe 'Movie Show', type: :feature do
   #   As a user, 
   # When I visit a movie's detail page (`/users/:user_id/movies/:movie_id`) where :id is a valid user id,
   # I should see
-  # - a button to Create a Viewing Party
-  # - a button to return to the Discover Page
+  # [x] a button to Create a Viewing Party
+  # [x] a button to return to the Discover Page
 
   # I should also see the following information about the movie:
 
-  # - Movie Title
-  # - Vote Average of the movie
-  # - Runtime in hours & minutes
-  # - Genre(s) associated to movie
-  # - Summary description
-  # - List the first 10 cast members (characters & actress/actors)
-  # - Count of total reviews
-  # - Each review's author and information
+  # [x] Movie Title
+  # [x] Vote Average of the movie
+  # [x] Runtime in hours & minutes
+  # [x] Genre(s) associated to movie
+  # [x] Summary description
+  # [x] List the first 10 cast members (characters & actress/actors)
+  # [x] Count of total reviews
+  # [x] Each review's author and information
 
   it 'shows the movie details', :vcr do
     VCR.use_cassette('spec/fixtures/vcr_cassettes/Movie_Show/shows_the_movie_details.yml') do
@@ -47,6 +47,38 @@ RSpec.describe 'Movie Show', type: :feature do
         expect(page).to have_css('.author')
         expect(page).to have_css('.content')
       end
+    end
+  end
+
+  #   When I visit the new viewing party page ('/users/:user_id/movies/:movie_id/viewing_party/new', where :user_id is a valid user's id and :movie_id is a valid Movie id from the API),
+  # I should see the name of the movie title rendered above a form with the following fields:
+
+  # [] Duration of Party with a default value of movie runtime in minutes; a viewing party should NOT be created if set to a value less than the duration of the movie
+  # [] When: field to select date
+  # [] Start Time: field to select time
+  # [] Guests: three (optional) text fields for guest email addresses 
+  # [] Button to create a party
+
+  it 'can create a new viewing party - Happy Path', :vcr do
+    VCR.use_cassette('spec/fixtures/vcr_cassettes/Movie_Show/shows_the_movie_details.yml') do
+      visit user_movie_path(@user_1, 9732)
+      click_button 'Create a Viewing Party'
+
+      expect(page).to have_content('Party Duration: 1h 21m')
+
+      expect(page).to have_field('When')
+      select '2024-07-07', from: 'When'
+
+      expect(page).to have_field('Start Time')
+      select '12:00', from: 'Start Time'
+
+      expect(page).to have_css('.guests')
+      expect(page).to have_button('Create Party')
+      
+      click_button 'Create Party'
+
+      expect(current_path).to eq("/users/#{@user_1}")
+      expect(page).to have_content('Party Duration: 1h 21m')
     end
   end
 end
