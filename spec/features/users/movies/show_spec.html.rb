@@ -74,4 +74,30 @@ RSpec.describe 'Movie Show', type: :feature do
     expect(current_path).to eq("/users/#{@user_1.id}")
     expect(page).to have_content('Party Time: 2024-07-07 at 11:30')
   end
+
+  #   When I visit a Movie Details page (`/users/:user_id/movies/:movie_id`),
+  # I see a link for "Get Similar Movies"
+  # When I click that link
+  # I am taken to the Similar Movies page (`/users/:user_id/movies/:movie_id/similar`)
+  # Where I see a list of movies that are similar to the one provided by :movie_id, 
+  # which includes the similar movies': 
+  # - Title
+  # - Overview
+  # - Release Date
+  # - Poster image
+  # - Vote Average
+
+  xit 'can show similar movies' do
+    visit user_movie_path(@user_1, 9732)
+
+    click_link 'Get Similar Movies'
+
+    expect(current_path).to eq(user_movie_similar_movies_path(@user_1, 9732))
+    expect(page).to have_css('.similar-movie', count: 20)
+    expect(page).to have_css('.title')
+    expect(page).to have_css('.overview')
+    expect(page).to have_css('.release-date')
+    expect(page).to have_css('.vote-average')
+    expect(page).to have_css('.poster')
+  end
 end
