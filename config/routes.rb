@@ -7,8 +7,6 @@ Rails.application.routes.draw do
   root "welcome#index"
   get '/register', to: 'users#new', as: 'register_user'
   get 'users/:user_id/top_rated_movies', to: 'top_rated_movies#index'
-  # get 'users/:user_id/movies/:movie_id/viewing_party/:id', to: 'viewing_party#show'
-  # get 'users/:user_id/movies/:movie_id/viewing_party/new', to: 'viewing_party#new'
 
   resources :users, only: [:show, :create] do
     resources :discover, only: [:index]
