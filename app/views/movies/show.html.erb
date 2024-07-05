@@ -1,7 +1,7 @@
 <h1><%= @movie.title %></h1>
 
 <p><%= link_to "Discover Page", "/users/#{@user.id}/discover", class: "btn btn-primary" %></p>
-<p><%= link_to "Create a Viewing Party", "/users/#{@user.id}/moviews/#{@movie.id}/viewing_party/new", class: "btn btn-primary"  %></p>
+<p><%= link_to "Create a Viewing Party", "/users/#{@user.id}/movies/#{@movie.id}/viewing_party/new", class: "btn btn-primary"  %></p>
 
 <p>Vote Average: <%= @movie.vote_average %></p>
 

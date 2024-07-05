@@ -1,0 +1,23 @@
+<h1>Viewing Party for <%= @movie.title %></h1>
+
+<h2>Where to Watch</h2>
+
+<% if @buy_providers.any? %>
+  Buy Providers:
+  <% @buy_providers.each do |buy_provider| %>
+    <div class="buy-provider-logo">
+      <%= image_tag "https://image.tmdb.org/t/p/original#{buy_provider.logo_path}" %>
+    </div>
+  <% end %>
+<% end %>
+
+<% if @rent_providers.any? %>
+  Rent Providers:
+  <% @rent_providers.each do |rent_provider| %>
+    <div class="rent-provider-logo">
+      <%= image_tag "https://image.tmdb.org/t/p/original#{rent_provider.logo_path}" %>
+    </div>
+  <% end %>
+<% end %>
+
+<p>Buy/Rent data provided by JustWatch</p> 

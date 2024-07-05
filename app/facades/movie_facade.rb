@@ -25,4 +25,24 @@ class MovieFacade
     review_data = MovieService.get_reviews_by_movie_id(movie_id)
     Review.new(review_data)
   end
+
+  def get_buy_providers(movie_id)
+    provider_data = MovieService.get_watch_providers(movie_id)[:buy]
+
+    return [] if provider_data.nil? || !provider_data.is_a?(Array)
+
+    provider_data.map do |provider|
+      Provider.new(provider)
+    end
+  end
+
+  def get_rent_providers(movie_id)
+    provider_data = MovieService.get_watch_providers(movie_id)[:rent]
+
+    return [] if provider_data.nil? || !provider_data.is_a?(Array)
+
+    provider_data.map do |provider|
+      Provider.new(provider)
+    end
+  end
 end

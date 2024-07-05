@@ -27,6 +27,15 @@ class ViewingPartyController < ApplicationController
     end
   end
 
+  def show
+
+    @viewing_party = ViewingParty.find(params[:id])
+    @movie = MovieFacade.new.get_movie_by_id(params[:movie_id])
+    @buy_providers = MovieFacade.new.get_buy_providers(@movie.id).select(&:valid?)
+    @rent_providers = MovieFacade.new.get_rent_providers(@movie.id)
+
+  end
+
   private
 
   def viewing_party_params

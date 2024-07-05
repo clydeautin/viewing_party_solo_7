@@ -40,4 +40,14 @@ class MovieService
 
     JSON.parse(response.body, symbolize_names: true)
   end
+
+  def self.get_watch_providers(movie_id)
+    response = conn.get("/3/movie/#{movie_id}/watch/providers") do |req|
+      req.params['api_key'] = Rails.application.credentials.movie_db[:key]
+    end
+    full = JSON.parse(response.body, symbolize_names: true)
+    results = full[:results]
+    usa_only = results[:US]
+
+  end
 end
