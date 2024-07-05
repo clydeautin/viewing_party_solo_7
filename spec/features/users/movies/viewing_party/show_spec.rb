@@ -11,7 +11,7 @@ RSpec.describe 'Viewing Party Show Page', type: :feature do
   end
 
   it 'shows logos and details of the viewing party' do
-    save_and_open_page
+
     expect(page).to have_css('.buy-provider-logo')
     expect(page).to_not have_css('.rent-provider-logo')
 

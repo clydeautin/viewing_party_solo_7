@@ -61,7 +61,6 @@ RSpec.describe 'Movie Show', type: :feature do
 
   it 'can create a new viewing party - Happy Path' do
     visit "/users/#{@user_1.id}/moviews/9732/viewing_party/new"
-    # save_and_open_page
 
     expect(page).to have_field('Party Duration:', with: '81')
 
