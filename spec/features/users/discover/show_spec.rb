@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe 'Discover Show', type: :feature do
   before (:each) do
-    @user_1 = User.create!(name: 'Sam', email: 'sam.smith@email.com')
-    @user_2 = User.create!(name: 'Tommy', email: 'tommy.chan@gmail.com')
+    @user_1 = User.create!(name: 'Sam', email: 'sam.smith@email.com', password: 'hello')
+    @user_2 = User.create!(name: 'Tommy', email: 'tommy.chan@gmail.com', password: 'hello')
     visit "/users/#{@user_1.id}/discover"
   end
 

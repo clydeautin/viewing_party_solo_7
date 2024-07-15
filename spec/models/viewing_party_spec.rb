@@ -4,8 +4,8 @@ RSpec.describe ViewingParty, type: :model do
   before(:each) do
     @movie_runtime = 180
     @party = ViewingParty.create!(date: "2023-12-01", start_time: "07:25", duration: 180, movie_runtime: @movie_runtime)
-    @user_1 = User.create!(name: 'Sam', email: 'sam@email.com')
-    @user_2 = User.create!(name: 'Tommy', email: 'tommy@email.com')
+    @user_1 = User.create!(name: 'Sam', email: 'sam@email.com', password: 'hello')
+    @user_2 = User.create!(name: 'Tommy', email: 'tommy@email.com', password: 'hello')
     UserParty.create!(user_id: @user_1.id, viewing_party_id: @party.id, host: true)
     UserParty.create!(user_id: @user_2.id, viewing_party_id: @party.id, host: false)
   end

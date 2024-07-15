@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'Viewing Party Show Page', type: :feature do
   before(:each) do
-    @user_1 = User.create!(name: 'Sam', email: 'sam.smith@email.com')
+    @user_1 = User.create!(name: 'Sam', email: 'sam.smith@email.com', password: 'hello')
     visit "/users/#{@user_1.id}/movies/9732/viewing_party/new"
     fill_in 'date', with: '2024-07-07'
     fill_in 'start_time', with: '11:30'

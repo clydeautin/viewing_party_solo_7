@@ -24,7 +24,6 @@ class Movie
   end
 
   def runtime_in_hours_and_minutes
-    # require 'pry'; binding.pry
     if @runtime.nil?
       0
     else
